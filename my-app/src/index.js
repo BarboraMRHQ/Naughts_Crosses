@@ -110,11 +110,13 @@ function Square(props) {
       [0, 4, 8],
       [2, 4, 6],
     ];
+    let threeinarow = null;
     lines.forEach((element) => {
       const [a, b, c] = element;
-      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        return squares[a];
+      if (squares[a] && (squares[a] === squares[b]) && (squares[a] === squares[c])) {
+        threeinarow = squares[a];
+        return false; //breaks out of iterations
       }
     });
-    return null;
+    return threeinarow;
   }
