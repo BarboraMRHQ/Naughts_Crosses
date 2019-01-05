@@ -26,7 +26,6 @@ function Square(props) {
     render() {
       return (
         <div>
-          <div className="status">{status}</div>
           <div className="board-row">
             {this.renderSquare(0)}
             {this.renderSquare(1)}
