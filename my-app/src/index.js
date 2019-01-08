@@ -53,12 +53,13 @@ class Game extends React.Component {
       history: [{
         squares:Array(9).fill(null), //initial state of game, nothing in the squares
       }],
+      stepNumber: 0, //no moves have been made yet
       xIsNext:true, //X starts
     };
   }
 
   handleClick(i) {
-    const history= this.state.history;
+    const history= this.state.history.slice(0, this.state.stepNumber + 1);
     const current= history[history.length-1];
     const squares = current.squares.slice();//make a copy of the existing game array
 
@@ -71,19 +72,27 @@ class Game extends React.Component {
         history:history.concat([{//states have to be immutable, so instead of adding directly to history, a copy is made then edited, then overwrites
           squares: squares,//added to history is the current move - note the difference between squares in state and local squares
         }]),
+        stepNumber:history.length,
         xIsNext: !this.state.xIsNext,
     });
-}
+  }
+
+  jumpTo(step) {
+    this.setState({
+      stepNumber:step, //step is an array?
+      xIsNext: (step % 2) === 0, //checking if step is even???
+    });
+  }
 
   render() {
     const history = this.state.history;
-    const current = history[history.length -1];
+    const current = history[this.state.stepNumber];
     const winner =calculateWinner(current.squares);
 
-    const moves = history.map((step, move) => {//step is every element of history (squares) and move is the index of each
-      const desc = move ? `Go to move #${move}` : `Go to game start`;
-      return (
-        <li>
+    const moves = history.map((step, move) => {//step is every element value of history (a nested array of 9) and move is the index of the element that is being iterated through
+      const desc = move ? `Go to move #${move}` : `Go to game start`; //if 0, it is only the initial empty board. after each click on the board, a new array of 9 is added to history, thus giving a new index for a new move
+      return (//each list item needs a key to uniquely identify it for rendering something that can change
+        <li key={move}>
           <button onClick={() => this.jumpTo(move)}>{desc}</button>
         </li>
       );
