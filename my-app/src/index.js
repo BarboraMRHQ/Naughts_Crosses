@@ -80,8 +80,8 @@ class Game extends React.Component {
   jumpTo(move) {
     console.log(move);
     this.setState({
-      stepNumber:move, //step is an array?
-      xIsNext: (move % 2) === 0, //checking if step is even???
+      stepNumber:move, //move is the index of the board values taken from history
+      xIsNext: (move % 2) === 0, //the 1st, 3rd etc moves are made by X
     });
   }
 
