@@ -77,10 +77,11 @@ class Game extends React.Component {
     });
   }
 
-  jumpTo(step) {
+  jumpTo(move) {
+    console.log(move);
     this.setState({
-      stepNumber:step, //step is an array?
-      xIsNext: (step % 2) === 0, //checking if step is even???
+      stepNumber:move, //step is an array?
+      xIsNext: (move % 2) === 0, //checking if step is even???
     });
   }
 
